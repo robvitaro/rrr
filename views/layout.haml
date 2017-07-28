@@ -1,0 +1,9 @@
+!!! 5
+%html.no-js{:lang => 'en'}
+  %head
+    %title= @title
+    %link(rel="stylesheet" href='//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css')
+    %meta{:charset => 'utf-8'}
+  %body.container
+    %h1= @title
+    = yield
