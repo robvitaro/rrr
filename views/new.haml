@@ -1,0 +1,11 @@
+%h3 New Feed
+
+%form(action='/create' method='POST' id='newLinkForm')
+
+  %label Title:
+  %input(type='text' name='feed_title' title='Enter a friendly title' )
+
+  %label URL:
+  %input(type='text' name='feed_url' title='Enter the URL' )
+
+  %input(type='submit')

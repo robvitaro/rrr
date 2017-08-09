@@ -1,0 +1,9 @@
+%ul.unstyled
+  %h2= @feed
+  -@items.each do |item|
+    %li
+      %h3
+        %a(href="#{item.link}")
+          =item.title
+        %span=item.description
+      %hr

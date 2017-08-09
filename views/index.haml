@@ -1,9 +1,9 @@
 %ul.unstyled
-  %h2= @feed
-  -@items.each do |item|
+  %h2 Feeds
+  -@links.each do |item|
     %li
       %h3
-        %a(href="#{item.link}")
+        %a(href="/feed/#{item.id}")
           =item.title
-        %span=item.description
-      %hr
+  %a(href='/new')
+    ='New'
