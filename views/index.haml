@@ -1,9 +1,2 @@
-%ul.unstyled
-  %h2 Feeds
-  -@links.each do |item|
-    %li
-      %h3
-        %a(href="/feed/#{item.id}")
-          =item.title
-  %a(href='/new')
-    ='New'
+%a.btn.btn-primary(href='/new')
+  ='New Feed'

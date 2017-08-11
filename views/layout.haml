@@ -1,9 +1,49 @@
 !!! 5
-%html.no-js{:lang => 'en'}
+%html.no-js{lang: 'en'}
   %head
-    %title= @title
-    %link(rel="stylesheet" href='//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css')
-    %meta{:charset => 'utf-8'}
-  %body.container
-    %h1= @title
-    = yield
+    %meta{charset: 'utf-8'}/
+    <meta http-equiv='x-ua-compatible' content='ie=edge,chrome=1'>
+    %meta{name: 'viewport', content: 'width=device-width, initial-scale=1.0'}
+    %meta{name: 'description', content: ''}
+    %meta{name: 'author', content: ''}
+
+    %title='rrr (Rob\'s RSS Reader)'
+
+    %link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'
+    integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u' crossorigin='anonymous')
+
+    %link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css'
+    integrity='sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp' crossorigin='anonymous')
+
+    %link(rel='stylesheet' href='/css/style.css' type='text/css' )
+
+    %script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'
+    integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa' crossorigin='anonymous')
+
+  %body
+    %nav.navbar.navbar-inverse.navbar-fixed-top
+      .container-fluid
+        .navbar-header
+          %button.navbar-toggle.collapsed{type: 'button', data: {toggle: "collapse", target:"#navbar"}, aria: {expanded: "false", controls: "navbar"}}
+            %span.sr-only= 'Toggle navigation'
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          %a.navbar-brand(href='#')= 'rrr (Rob\'s RSS Reader)'
+        #navbar.navbar-collapse.collapse
+          %ul.nav.navbar-nav
+            %li.active
+              %a(href='/')='Home'
+            %li
+              %a(href='#about')='About'
+            %li
+              %a(href='#contact')='Contact'
+    .container-fluid
+      .row
+        .col-sm-3.col-md-2
+          .list-group
+            -@links.each do |item|
+              %a.list-group-item(href="/feed/#{item.id}")
+                =item.title
+        .col-sm-9.col-md-10
+          = yield

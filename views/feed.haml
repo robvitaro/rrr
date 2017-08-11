@@ -1,9 +1,9 @@
-%ul.unstyled
-  %h2= @feed
+.page-header
+  %h1= @feed
   -@items.each do |item|
-    %li
-      %h3
+    .panel.panel-default
+      .panel-heading
         %a(href="#{item.link}")
           =item.title
-        %span=item.description
-      %hr
+      .panel-body
+        =item.description

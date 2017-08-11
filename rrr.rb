@@ -32,6 +32,7 @@ class RRR < Sinatra::Base
   end
 
   get '/new' do
+    @links = RssLink.all
     haml :new
   end
 
@@ -46,11 +47,11 @@ class RRR < Sinatra::Base
   end
 
   get '/feed/:id' do
-    @title = "rrr (rob's rss reader)"
+    @links = RssLink.all
     url = RssLink.get(params[:id]).url
     open(url, {ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE}) do |rss|
       feed = RSS::Parser.parse(rss)
-      @feed = "Title: #{feed.channel.title}"
+      @feed = feed.channel.title
       @items = feed.items
     end
     haml :feed
