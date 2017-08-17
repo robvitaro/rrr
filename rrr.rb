@@ -6,7 +6,13 @@ require 'rss'
 require 'open-uri'
 require 'data_mapper'
 
-DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/db.db")
+configure :development do
+  DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/db.db")
+end
+
+configure :test do
+  DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/test_db.db")
+end
 
 class RssLink
   include DataMapper::Resource
@@ -25,6 +31,7 @@ RssLink.auto_upgrade!
 
 class RRR < Sinatra::Base
 
+  FeedInfo = Struct.new(:title, :items)
 
   get '/' do
     @links = RssLink.all
@@ -49,11 +56,22 @@ class RRR < Sinatra::Base
   get '/feed/:id' do
     @links = RssLink.all
     url = RssLink.get(params[:id]).url
-    open(url, {ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE}) do |rss|
-      feed = RSS::Parser.parse(rss)
-      @feed = feed.channel.title
-      @items = feed.items
-    end
+    feed_info = rss_feed_info(url)
+    @feed = feed_info.title
+    @items = feed_info.items
     haml :feed
   end
+
+  # Helpers
+
+  def rss_feed_info(url)
+    feed_info = nil
+    open(url, {ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE}) do |rss|
+      puts "the rss: #{rss}"
+      feed = RSS::Parser.parse(rss)
+      feed_info = FeedInfo.new(feed.channel.title, feed.items)
+    end
+    feed_info
+  end
+
 end
