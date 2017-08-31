@@ -1,5 +1,8 @@
 .page-header
   %h1= @feed
+  %a(href="?all=true")= 'Show all'
+  %span= ' | '
+  %a(href="?")= 'Hide read'
   -@items.each do |item|
     .panel.panel-default
       .panel-heading
@@ -7,3 +10,6 @@
           =item.title
       .panel-body
         =item.description
+      .panel-footer
+        - guid = item.guid.to_s
+        %a(href="/feed_item/mark_read?guid=#{guid[/\>(.*?)\<\//m, 1]}")= 'Mark read'
